@@ -79,12 +79,21 @@
 			}
 		}
 	</style>
+	<script>
+		function validateForm(event) {
+			var password = document.getElementById('password').value;
+			if (password === '') {
+				alert('Please enter a password.');
+				event.preventDefault();
+			}
+		}
+	</script>
 </head>
 <body>
 
 	<h1 style="text-align: center; font-size: 24px;">Login Page</h1>
 
-	<form>
+	<form onsubmit="validateForm(event)">
 		<label for="username">Username:</label>
 		<input type="text" id="username" name="username"><br>
 
