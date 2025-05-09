@@ -141,6 +141,36 @@
 <footer>
   &copy; 2025 Night Sky Portal. All rights reserved.
 </footer>
+<!-- Floating Call Visualizer Button -->
+<button class="omnibrowse-code-button" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  background-color: #90e0ef;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 9999;
+">
+  Get CoBrowsing Code
+</button>
 
+<script>
+  function showVisitorCode() {
+    if (!document.querySelector('sm-visitor-code')) {
+      const code = document.createElement('sm-visitor-code');
+      document.body.appendChild(code);
+    }
+  }
+
+  document
+    .querySelector('.omnibrowse-code-button')
+    .addEventListener('click', showVisitorCode);
+</script>
 </body>
 </html>
