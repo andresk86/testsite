@@ -111,6 +111,7 @@
   <a href="#login">Login</a>
   <a href="#about">About</a>
   <a href="#contact">Contact</a>
+  <a href="javascript:void(0);" id="visualizer-link" style="color: #90e0ef; font-weight: 600;">CoBrowse</a>
 </nav>
 
 <section id="login" class="section">
@@ -140,29 +141,7 @@
 
 <footer>
   &copy; 2025 Night Sky Portal. All rights reserved.
-<!-- Centered Call Visualizer Button -->
-<div id="visualizer-button-container" style="
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  text-align: center;
-">
-  <button class="omnibrowse-code-button" style="
-    padding: 16px 24px;
-    background-color: #90e0ef;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-  ">
-    Get CoBrowsing Code
-  </button>
-</div>
+</footer>
 
 <script>
   function showVisitorCode() {
@@ -173,8 +152,9 @@
   }
 
   document
-    .querySelector('.omnibrowse-code-button')
+    .getElementById('visualizer-link')
     .addEventListener('click', showVisitorCode);
 </script>
+
 </body>
 </html>
