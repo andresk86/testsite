@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Twilio Off-boarding Cleanup</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 16px; margin: 0; background: #f9fafb; }
+    .card { background: #fff; padding: 16px; border-radius: 8px; border: 1px solid #e5e7eb; }
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+    input { width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box; }
+    button { background: #d97706; color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
+    button:hover { background: #b45309; }
+    #logOutput { margin-top: 16px; background: #1e293b; color: #38bdf8; font-family: monospace; padding: 12px; border-radius: 6px; height: 220px; overflow-y: auto; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h3>Client Twilio Cleanup & Off-boarding</h3>
+  
+  <div class="form-group">
+    <label for="identifier">Client Name OR Twilio Sub-account SID:</label>
+    <input type="text" id="identifier" placeholder="e.g. ACxxxxxxxxxx or Acme Corp">
+  </div>
+
+  <div class="form-group">
+    <label for="ticketId">Off-boarding Ticket ID:</label>
+    <input type="text" id="ticketId" placeholder="e.g. TICKET-1234">
+  </div>
+
+  <button onclick="startCleanup()">Run Twilio Cleanup Process</button>
+
+  <div id="logOutput">Ready to execute...</div>
+</div>
+
+<script>
+  function log(msg) {
+    const output = document.getElementById('logOutput');
+    output.innerText += `\n[${new Date().toLocaleTimeString()}] ${msg}`;
+    output.scrollTop = output.scrollHeight;
+  }
+
+  async function startCleanup() {
+    const identifier = document.getElementById('identifier').value.trim();
+    const ticketId = document.getElementById('ticketId').value.trim();
+
+    if (!identifier) {
+      alert("Please enter a Client Name or Account SID.");
+      return;
+    }
+
+    log(`Initiating cleanup for: ${identifier}...`);
+
+    try {
+      // POST request to your secure Glia Function / Middleware API endpoint
+      const response = await fetch('https://your-backend-proxy.example.com/api/twilio-cleanup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier, ticketId })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        log(`[ERROR] ${result.message}`);
+        return;
+      }
+
+      result.logs.forEach(entry => log(entry));
+      log("Cleanup run finished. Check ticket history for audited logs.");
+
+    } catch (err) {
+      log(`[FATAL] Network or proxy error: ${err.message}`);
+    }
+  }
+</script>
+</body>
+</html>
